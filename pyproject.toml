@@ -30,6 +30,7 @@ black = "^19.10b0"
 tox = "^3.14.6"
 flake8 = "^3.7.9"
 pytest = "^5.4.1"
+coverage = "^5.5"
 
 [tool.tox]
 legacy_tox_ini = """
@@ -38,8 +39,12 @@ envlist = py39
 isolated_build = True
 
 [testenv]
-deps=pytest
-commands=pytest
+deps=
+  pytest
+  coverage
+commands=
+  coverage run -m pytest
+  coverage html
 """
 
 [tool.black]
@@ -60,3 +65,10 @@ exclude = '''
   | tests/.*/setup.py
 )/
 '''
+
+[tool.coverage.run]
+omit = [
+  '*/site-packages/*',
+  'tests/*',
+  'ci_data/*'
+]
